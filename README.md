@@ -17,9 +17,6 @@
 - serverChanSender.py  
   通过 Server酱 进行微信提醒，不用修改
 
-- responsed-html-sample.html
-  一个 POST 请求响应返回的 HTML 文本，可供参考（没什么用）
-
 ## 使用方法
 
     环境：Anaconda、深大校内网
