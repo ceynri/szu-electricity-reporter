@@ -30,7 +30,7 @@
 
     校内网环境，点击<kbd>F12</kbd>键或空白处`右键-检查`打开开发者工具，选择 Network 选项卡，登录深大[SIMS电控网上查询系统](http://192.168.84.3:9090/cgcSims/)，填写宿舍信息后，随便选择开始时间、结束时间、查询类型，点击查询，在开发者工具中选择 `selectList.do` 文件，查看它的 POST 请求参数（如果没有则刷新页面）。
 
-    ![network.jpg](https://i.loli.net/2019/09/23/XghzL1u2wsJlxjC.jpg)
+    ![network.jpg](https://ftp.bmp.ovh/imgs/2019/09/2021ada6023d5368.jpg)
 
     将 `main.py` 文件内的参数对应地替换为图中红框所包含的 `client`、`roomId`、`roomName` 参数即可。
 
@@ -38,7 +38,7 @@
 
     （为避免日后版本更新，以官网教程为准。）
     
-    ![serverChan.jpg](https://i.loli.net/2019/09/23/14fsDZvOzF3hGiQ.jpg)
+    ![serverChan.jpg](https://ftp.bmp.ovh/imgs/2019/09/274ff356c8a14998.jpg)
     
     打开 [Server酱](http://sc.ftqq.com/) 官网，选择`登入`，自动 github 账号授权登录。
 
@@ -48,7 +48,7 @@
 
 3. 运行 `main.py` 程序即可收到微信提醒，控制台亦有相关信息输出
 
-![msg.jpg](https://i.loli.net/2019/09/23/XG2NcIgt8MCoQFi.jpg)
+    ![msg.jpg](https://ftp.bmp.ovh/imgs/2019/09/57f81d7b37df2f90.jpg)
 
 4. Windows 系统可以设置 `计划任务` 定时运行该脚本，达到每日提醒的效果~（具体方法略）
 
