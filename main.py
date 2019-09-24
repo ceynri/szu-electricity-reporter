@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     # 通过 server酱 处理与发送数据
     # describe参数内容会添加到内容详情最前端
-    describe = '(～o￣3￣)～{}电量查询'.format(room_name)
+    describe = '{}电量查询 ᶘ ᵒᴥᵒᶅ'.format(room_name)
     serverChanSender.send(
         url=sc_key,
         data=tabular_data,
