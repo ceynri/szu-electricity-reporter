@@ -9,6 +9,7 @@ def printData(data: list):
         for datum in row:
             print(datum.ljust(12, ' '), end='')
         print()
+    return
 
 
 if __name__ == '__main__':
@@ -32,5 +33,11 @@ if __name__ == '__main__':
     sc_key = 'https://sc.ftqq.com/xxxxxxxxxxxxxxxxxxxx.send'
 
     # 通过 server酱 处理与发送数据
-    serverChanSender.send(url=sc_key, data=tabular_data)
+    # describe参数内容会添加到内容详情最前端
+    describe = '(～o￣3￣)～{}电量查询'.format(room_name)
+    serverChanSender.send(
+        url=sc_key,
+        data=tabular_data,
+        describe=describe
+    )
     print('已发送至微信')
