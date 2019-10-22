@@ -21,6 +21,18 @@
 
 <br/>
 
+## 效果
+
+微信信息提醒：
+
+![msg.jpg](https://i.loli.net/2019/10/22/9pOLRsrvIWe5Tqn.jpg)
+
+详细数据：
+
+![detail.jpg](https://i.loli.net/2019/10/22/H2w1zFVvcltLjA6.jpg)
+
+<br/>
+
 ## 项目结构
 
 - [main.py](main.py)  
@@ -63,8 +75,6 @@
     然后复制`发送信息`的 `SCKEY` 码，替换 `main.py` 中的 `sc_key` 参数即可。
 
 3. 运行 `main.py` 程序即可收到微信提醒，控制台亦有相关信息输出
-
-    ![msg.jpg](https://ftp.bmp.ovh/imgs/2019/09/57f81d7b37df2f90.jpg)
 
 4. Windows 系统可以设置 `计划任务` 定时运行该脚本，达到每日提醒的效果~（具体方法略）
 
