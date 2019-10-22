@@ -3,7 +3,7 @@ import datetime
 import re
 
 
-# 返回一个7*4的二维数组，分别是日期、剩余电量、总用电量、总购电量
+# 返回一个n*4的二维数组，分别是日期、剩余电量、总用电量、总购电量
 def crawlData(client: str, room_name: str, room_id: str, interval: int = 7) -> list:
     # 爬取网页，应该一般不会变动
     url = 'http://192.168.84.3:9090/cgcSims/selectList.do'
@@ -32,20 +32,26 @@ def crawlData(client: str, room_name: str, room_id: str, interval: int = 7) -> l
     # print('\n--- HTML ---\n', html, '\n--- HTML ---\n')  # 调试用
 
     # 匹配需要的表格块
-    raw_electricity_data = re.findall(r'<td width="13%" align="center">(.*?)</td>', html, re.S)
-    raw_date_data = re.findall(r'<td width="22%" align="center">(.*?)</td>', html, re.S)
+    raw_e_data = re.findall(
+        r'<td width="13%" align="center">(.*?)</td>', html, re.S)
+    raw_date_data = re.findall(
+        r'<td width="22%" align="center">(.*?)</td>', html, re.S)
+
     # 清洗数据
-    electricity_data = []
-    count, i = 0, -1
-    for datum in raw_electricity_data:
-        if count % 5 != 0 and count % 5 != 1:
-            electricity_data[i].append(datum.strip())
-        elif count % 5 != 1:
-            i += 1
-            electricity_data.append([])
-            electricity_data[i].append(raw_date_data[i].strip()[:10])
-        count += 1
+    e_data = []
+    row, p = -1, 0  # 行数row | 第p位data
+    for datum in raw_e_data:
+        # 第一列为序号
+        if p % 5 == 0:
+            # 新建一行，插入第一个数据为日期
+            row += 1
+            e_data.append([])
+            e_data[row].append(raw_date_data[row].strip()[:10])
+        # 除了第二列（房名）以外的数据
+        elif p % 5 != 1:
+            e_data[row].append(float(datum.strip()))
+        p += 1  # 读取下一个数据
 
-    # print(electricity_data)  # 调试用
+    # print(e_data)  # 调试用
 
-    return electricity_data
+    return e_data
