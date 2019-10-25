@@ -15,7 +15,7 @@ def main():
     # 获得数据
     table_data = crawler.crawlData(client, room_name, room_id, interval_day)
     if len(table_data) == 0:
-        print('[爬取数据失败，请检查是否能访问电费查询网站]')
+        print('[爬取数据失败，请检查是否能访问电费查询网站"http://192.168.84.3:9090/cgcSims/"]')
         return
     print('[爬取数据结束]')
 
@@ -31,7 +31,7 @@ def main():
     # sc_key = 'https://sc.ftqq.com/xxxxxxxxxxxxxxxxxxxx.send'
 
     # # describe参数内容会添加到内容详情最前端
-    # describe = '{}电量查询 ᶘ ᵒᴥᵒᶅ'.format(room_name)
+    # describe = 'ᶘ ᵒᴥᵒᶅ {}电量查询'.format(room_name)
 
     # # 处理数据为要发送的表格格式信息
     # send_msg = scsender.handle(data, describe)
@@ -43,17 +43,6 @@ def main():
     # )
 
     # print('[已发送至微信]')
-    return
-
-
-# 格式化输出爬虫获得的数据
-def printData(data: list):
-    print('日期'.ljust(10, ' '), '当日用电'.ljust(8, ' '),
-          '可用电量'.ljust(8, ' '), '当日充电'.ljust(8, ' '))
-    for row in data:
-        for datum in row:
-            print(datum.ljust(12, ' '), end='')
-        print()
     return
 
 
@@ -85,6 +74,21 @@ def processingData(table_data: list):
     })
 
     return data
+
+
+# 格式化输出爬虫获得的数据
+def printData(data: list):
+    print('日期'.ljust(8, ' '), '当日用电'.ljust(8, ' '),
+          '可用电量'.ljust(8, ' '), '当日充电'.ljust(8, ' '))
+    for row in data:
+        for datum in row:
+            value = row[datum]
+            # float型要转换为str才可以使用ljust函数
+            if isinstance(value, float):
+                value = '{:.2f}'.format(value)
+            print(value.ljust(12, ' '), end='')  # 每个数据的长度为12字符宽
+        print()
+    return
 
 
 if __name__ == '__main__':
