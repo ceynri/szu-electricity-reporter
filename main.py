@@ -1,16 +1,24 @@
+import json
 import crawler
 import scsender
 
 
 # main函数
 def main():
-    # 【需修改】相关参数
-    # 已填写示例以风槐201（非本人宿舍）为例
+    # 相关参数
     client = '192.168.84.87'
-    room_name = '201'
-    room_id = '7141'
-    # 需要获取的日期范围（默认最近14天）
+    room_name = ''
+    room_id = ''
     interval_day = 14
+    sc_key = ''
+
+    with open('config.json', encoding='utf-8') as f:
+        config = json.load(f)
+        room_name = config['room_name']
+        room_id = config['room_id']
+        interval_day = config['interval_day']
+        sc_key = config['server_chan_key']
+        f.close()
 
     # 获得数据
     table_data = crawler.crawlData(client, room_name, room_id, interval_day)
@@ -25,24 +33,19 @@ def main():
     # 在控制台格式化输出爬虫获得的数据
     printData(data)
 
-    # 以下内容如无需发送至微信则无需修改，直接注释掉 #########################
+    # describe参数内容会添加到内容详情最前端
+    describe = 'ᶘ ᵒᴥᵒᶅ {}电量查询'.format(room_name)
 
-    # # 【需修改】填写Server酱SCKEY
-    # sc_key = 'https://sc.ftqq.com/xxxxxxxxxxxxxxxxxxxx.send'
+    # 处理数据为要发送的表格格式信息
+    send_msg = scsender.handle(data, describe)
 
-    # # describe参数内容会添加到内容详情最前端
-    # describe = 'ᶘ ᵒᴥᵒᶅ {}电量查询'.format(room_name)
+    # 发送信息
+    scsender.send(
+        key_url=sc_key,
+        data=send_msg,
+    )
 
-    # # 处理数据为要发送的表格格式信息
-    # send_msg = scsender.handle(data, describe)
-
-    # # 发送信息
-    # scsender.send(
-    #     key_url=sc_key,
-    #     data=send_msg,
-    # )
-
-    # print('[已发送至微信]')
+    print('[已发送至微信]')
     return
 
 
