@@ -10,17 +10,19 @@ import time
 room_name = ''
 room_id = ''
 interval_day = 7
+remind_daily = False
 sc_key = ''
 remind_time = 0
 
 
 def getConfig():
     with open('config.json', encoding='utf-8') as f:
-        global room_name, room_id, interval_day, sc_key, remind_time
+        global room_name, room_id, interval_day, remind_daily, sc_key, remind_time
         config = json.load(f)
         room_name = config['room_name']
         room_id = config['room_id']
         interval_day = config['interval_day']
+        remind_daily = config['remind_daily']
         sc_key = config['server_chan_key']
         remind_time = config['remind_time']
         f.close()
@@ -111,11 +113,12 @@ def printData(data: list):
 if __name__ == '__main__':
     while(True):
         main()
-        if sc_key == '':
+        if remind_daily is False or sc_key == '':
             break
         today_date = datetime.date.today()
         next_day_date = today_date + datetime.timedelta(days=1)
-        next_exec_time = datetime.datetime.combine(next_day_date, datetime.time(hour=remind_time))
+        next_exec_time = datetime.datetime.combine(
+            next_day_date, datetime.time(hour=remind_time))
         delta_time = (next_exec_time - datetime.datetime.now()).total_seconds()
         print(f'下次查询电量的时间：{next_exec_time}')
         time.sleep(delta_time)

@@ -3,5 +3,6 @@
   "room_name": "",
   "room_id": "",
   "interval_day": 14,
+  "remind_daily": false,
   "remind_time": 9
 }
