@@ -1,5 +1,5 @@
 # my ignore
-config.json
+# config.json
 .vscode/
 
 # Byte-compiled / optimized / DLL files
