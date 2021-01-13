@@ -1,7 +1,7 @@
-import json
 import crawler
-import scsender
+import sc_sender
 
+import json
 
 # main函数
 def main():
@@ -37,10 +37,10 @@ def main():
     describe = 'ᶘ ᵒᴥᵒᶅ {}电量查询'.format(room_name)
 
     # 处理数据为要发送的表格格式信息
-    send_msg = scsender.handle(data, describe)
+    send_msg = sc_sender.handle(data, describe)
 
     # 发送信息
-    scsender.send(
+    sc_sender.send(
         key_url=sc_key,
         data=send_msg,
     )
