@@ -1,8 +1,9 @@
 {
-  "server_chan_key": "",
   "room_name": "",
   "room_id": "",
+  "client": "192.168.84.87",
   "interval_day": 14,
   "remind_daily": false,
+  "server_chan_key": "",
   "remind_time": 9
 }

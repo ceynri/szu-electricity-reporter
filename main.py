@@ -6,41 +6,34 @@ import json
 import datetime
 import time
 
-# 相关参数
-room_name = ''
-room_id = ''
-interval_day = 7
-remind_daily = False
-sc_key = ''
-remind_time = 0
 
 
 def getConfig():
     with open('config.json', encoding='utf-8') as f:
-        global room_name, room_id, interval_day, remind_daily, sc_key, remind_time
         config = json.load(f)
-        room_name = config['room_name']
-        room_id = config['room_id']
-        interval_day = config['interval_day']
-        remind_daily = config['remind_daily']
-        sc_key = config['server_chan_key']
-        remind_time = config['remind_time']
-        f.close()
+    return config
 
 
 # main函数
 def main():
     # 获取配置
-    getConfig()
+    config = getConfig()
+    room_name = config['room_name']
+    room_id = config['room_id']
+    client = config['client']
+    interval_day = config['interval_day']
+    sc_key = config['server_chan_key']
+    remind_daily = config['remind_daily']
+    remind_time = config['remind_time']
+
     if room_name == '' or room_id == '':
         print('[error] 未配置config.json!')
-        return
+        exit()
     # 获得数据
-    client = '192.168.84.87'
     table_data = crawler.crawlData(client, room_name, room_id, interval_day)
     if len(table_data) == 0:
         print('[爬取数据失败，请检查是否能访问电费查询网站"http://192.168.84.3:9090/cgcSims/"]')
-        return
+        exit()
     print('[爬取数据结束]')
 
     # 处理数据
@@ -49,20 +42,28 @@ def main():
     # 在控制台格式化输出爬虫获得的数据
     printData(data)
 
-    # 若 sc_key 为空，则代表不发送微信提醒
-    if sc_key == '':
-        return
-    # describe参数内容会添加到内容详情最前端
-    describe = 'ᶘ ᵒᴥᵒᶅ {}电量查询'.format(room_name)
-    # 处理数据为要发送的表格格式信息
-    send_msg = sc_sender.handle(data, describe)
-    # 发送信息
-    sc_sender.send(
-        key_url=sc_key,
-        data=send_msg,
-    )
-    print('[已发送至微信]')
-    return
+    # 若 sc_key 存在，则发送微信提醒
+    if sc_key != '':
+        # describe参数内容会添加到内容详情最前端
+        describe = f'ᶘ ᵒᴥᵒᶅ {room_name}电量查询'
+        # 处理数据为要发送的表格格式信息
+        send_msg = sc_sender.handle(data, describe)
+        # 发送信息
+        sc_sender.send(
+            key_url=sc_key,
+            data=send_msg,
+        )
+        print('[已发送至微信]')
+    
+    if remind_daily is False or sc_key == '':
+        exit()
+    today_date = datetime.date.today()
+    next_day_date = today_date + datetime.timedelta(days=1)
+    next_exec_time = datetime.datetime.combine(
+        next_day_date, datetime.time(hour=remind_time))
+    delta_time = (next_exec_time - datetime.datetime.now()).total_seconds()
+    print(f'下次查询电量的时间：{next_exec_time}')
+    time.sleep(delta_time)
 
 
 # 加工数据获得想要的数据格式
@@ -113,12 +114,3 @@ def printData(data: list):
 if __name__ == '__main__':
     while(True):
         main()
-        if remind_daily is False or sc_key == '':
-            break
-        today_date = datetime.date.today()
-        next_day_date = today_date + datetime.timedelta(days=1)
-        next_exec_time = datetime.datetime.combine(
-            next_day_date, datetime.time(hour=remind_time))
-        delta_time = (next_exec_time - datetime.datetime.now()).total_seconds()
-        print(f'下次查询电量的时间：{next_exec_time}')
-        time.sleep(delta_time)
