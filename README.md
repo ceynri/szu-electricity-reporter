@@ -77,25 +77,19 @@
 
    ![run_with_windows](https://i.loli.net/2021/01/15/aGRXeqSjpKyCdlE.png)
 
-3. 如果无需每日提醒，则到这里就结束了；如果需要实现每日微信提醒的功能，可继续往下阅读
+如果无需每日提醒，则到这里就结束了；
 
-4. 注册 Server 酱 账号，绑定微信并获得 SCKEY 完成设置
+如果需要实现每日微信提醒的功能，可继续往下阅读：
 
-> （为避免日后版本更新，以官网教程为准。）
->
-> ![serverChan.jpg](https://ftp.bmp.ovh/imgs/2019/09/274ff356c8a14998.jpg)
->
-> 打开 [Server 酱](http://sc.ftqq.com/) 官网，选择`登入`，自动 github 账号授权登录。
->
-> 然后选择`微信推送`，扫码绑定微信，关注公众号。
->
-> 然后复制`发送信息`的 `SCKEY` 码，填入 config.json 的 `server_chan_key`。
+3. 注册 Server 酱 账号，获得 SCKEY，填入 config.json 的 `server_chan_key`。
 
-5. 运行 `run_with_windows.exe`，或者用命令行执行 `python main.py` 即可收到微信提醒。
+> 2021年4月 Server 酱服务目前进行了升级，服务细节需自行确认
 
-6. 配置 `remind_daily` 为 `true`，则脚本将不会退出而常驻后台。我们可以选择运行 `run.exe`，该编译版本会在后台静默运行，而不会弹出命令行窗口。如果使用 `run_with_windows.exe` 或执行 `main.py`，会有命令行窗口常驻的情况。
+4. 运行 `run_with_windows.exe`，或者用命令行执行 `python main.py` 即可收到微信提醒。
 
-7. 为了避免电脑重启后需要重新手动运行该程序，我们可以将 `run.exe` 添加为启动项。
+5. 配置 `remind_daily` 为 `true`，则脚本将不会退出而常驻后台。我们可以选择运行 `run.exe`，该编译版本会在后台静默运行，而不会弹出命令行窗口。如果使用 `run_with_windows.exe` 或执行 `main.py`，会有命令行窗口常驻的情况。
+
+5. 为了避免电脑重启后需要重新手动运行该程序，我们可以将 `run.exe` 添加为启动项。
 
 > 这里介绍其中一种添加开启启动项的方法：
 >
